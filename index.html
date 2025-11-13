@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!<DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -103,7 +103,7 @@
                         type: 'cover',
                         title: 'Putri Lilia & Kristal Harapan',
                         author: 'oleh Kerajaan Fantasi',
-                        imageUrl: 'https://placehold.co/400x500/3B82F6/FFFFFF?text=Kastil+Megah' // Biru
+                        imagePlaceholder: 'Kastil Megah (Disarankan: 400x500px)' // Biru
                     },
                     right: {
                         type: 'text',
@@ -123,7 +123,7 @@
                             <p class="mb-4">Penyihir Elara dari Hutan Berbisik memberi petunjuk.</p>
                             <p>"Kau harus menemukan tiga Permata Emosi," katanya. "Permata Keberanian (Biru), Kebaikan (Hijau), dan Kegembiraan (Pink)."</p>
                         `,
-                        imageUrl: 'https://placehold.co/400x300/22C55E/FFFFFF?text=Hutan+Berbisik' // Hijau
+                        imagePlaceholder: 'Hutan Berbisik (Disarankan: 400x300px)' // Hijau
                     },
                     right: {
                         type: 'text-image',
@@ -132,7 +132,7 @@
                             <p class="mb-4">Lilia pergi ke Gua Naga Tertidur. Ia memainkan musik lembut agar sang naga tidur lebih lelap.</p>
                             <p>Di dalam gua, ia menemukan Permata Biru yang bersinar terang!</p>
                         `,
-                        imageUrl: 'https://placehold.co/400x300/3B82F6/FFFFFF?text=Gua+Naga' // Biru
+                        imagePlaceholder: 'Gua Naga (Disarankan: 400x300px)' // Biru
                     }
                 },
                 // Spread 3: Halaman 4 & 5
@@ -144,7 +144,7 @@
                             <p class="mb-4">Ia lalu tiba di desa yang muram. Lilia membantu penduduk, memperbaiki mainan, dan menanam bunga merah muda.</p>
                             <p>Tawa anak-anak kembali terdengar, dan Permata Pink muncul di air mancur.</p>
                         `,
-                        imageUrl: 'https://placehold.co/400x300/EC4899/FFFFFF?text=Desa+Ceria' // Pink
+                        imagePlaceholder: 'Desa Ceria (Disarankan: 400x300px)' // Pink
                     },
                     right: {
                         type: 'text-image',
@@ -153,7 +153,7 @@
                             <p class="mb-4">Terakhir, di Sungai Perak, ia bertemu peri air. Sang peri terkesan dengan kebaikan hati Lilia yang pernah menolong burung.</p>
                             <p>Sebagai hadiah, Lilia mendapatkan Permata Hijau.</p>
                         `,
-                        imageUrl: 'https://placehold.co/400x300/10B981/FFFFFF?text=Peri+Sungai' // Hijau
+                        imagePlaceholder: 'Peri Sungai (Disarankan: 400x300px)' // Hijau
                     }
                 },
                 // Spread 4: Halaman 6 & Halaman Akhir
@@ -171,7 +171,7 @@
                         type: 'cover',
                         title: 'Tamat',
                         author: 'Semoga kau menikmati ceritanya!',
-                        imageUrl: 'https://placehold.co/400x500/F4D03F/333333?text=Kerajaan+Cerah' // Kuning
+                        imagePlaceholder: 'Kerajaan Cerah (Disarankan: 400x500px)' // Kuning
                     }
                 }
             ];
@@ -199,7 +199,18 @@
                     html = `
                         <div class="flex flex-col items-center justify-center h-full text-center">
                             <h2 class="text-3xl md:text-4xl font-bold text-pink-600 mb-4">${pageData.title}</h2>
-                            <img src="${pageData.imageUrl}" alt="Ilustrasi Sampul" class="rounded-lg shadow-md w-full max-w-sm mb-4 border-4 border-white">
+                            
+                            <!-- TEMPAT GAMBAR ANDA -->
+                            <div class="w-full max-w-sm h-[400px] bg-gray-200 rounded-lg shadow-md mb-4 border-4 border-dashed border-gray-400 flex items-center justify-center p-4 text-center text-gray-500">
+                                Masukkan gambar Anda di sini:<br><strong>${pageData.imagePlaceholder}</strong>
+                            </div>
+                            <!-- 
+                            CARA MEMASUKKAN GAMBAR:
+                            1. Upload gambar Anda (misal: "kastil.png") ke folder yang sama dengan file index.html ini.
+                            2. Ganti seluruh blok <div> "TEMPAT GAMBAR ANDA" di atas dengan tag <img> seperti ini:
+                            <img src="kastil.png" alt="${pageData.imagePlaceholder}" class="rounded-lg shadow-md w-full max-w-sm mb-4 border-4 border-white">
+                            -->
+                            
                             <p class="text-xl italic text-gray-600">${pageData.author}</p>
                         </div>
                     `;
@@ -209,7 +220,17 @@
                     html = `
                         <div class="text-gray-800 text-base md:text-lg leading-relaxed">
                             ${pageData.text}
-                            <img src="${pageData.imageUrl}" alt="Ilustrasi Cerita" class="rounded-lg shadow-md w-full mt-6 border-4 border-white">
+                            
+                            <!-- TEMPAT GAMBAR ANDA -->
+                            <div class="w-full h-[250px] bg-gray-200 rounded-lg shadow-md mt-6 border-4 border-dashed border-gray-400 flex items-center justify-center p-4 text-center text-gray-500">
+                                Masukkan gambar Anda di sini:<br><strong>${pageData.imagePlaceholder}</strong>
+                            </div>
+                            <!-- 
+                            CARA MEMASUKKAN GAMBAR:
+                            1. Upload gambar Anda (misal: "hutan.png") ke folder yang sama dengan file index.html ini.
+                            2. Ganti seluruh blok <div> "TEMPAT GAMBAR ANDA" di atas dengan tag <img> seperti ini:
+                            <img src="hutan.png" alt="${pageData.imagePlaceholder}" class="rounded-lg shadow-md w-full mt-6 border-4 border-white">
+                            -->
                         </div>
                     `;
                 }
@@ -262,3 +283,8 @@
     </script>
 </body>
 </html>
+           
+            
+                         
+                
+           
