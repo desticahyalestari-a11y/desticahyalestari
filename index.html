@@ -1,290 +1,188 @@
-!<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buku Dongeng: Putri Lilia dan Kristal Harapan</title>
-    <!-- Memuat Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Galeri Dunia Peri</title>
+
+    <!-- Memuat Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Memuat Google Font (Merriweather untuk nuansa buku cerita) -->
+    <!-- Memuat Font Awesome (untuk Ikon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Memuat Google Fonts (Tema Fantasi/Peri) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Ikon (Font Awesome) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lato&display=swap" rel="stylesheet">
 
     <style>
-        /* Menerapkan font default */
-        body {
-            font-family: 'Merriweather', serif;
-        }
-        
-        /* Efek bayangan dalam untuk 'gutter' buku */
-        #page-left {
-            border-right: 1px solid #d1d5db; /* Garis tengah buku */
-            box-shadow: inset -5px 0 15px -5px rgba(0, 0, 0, 0.2);
-        }
-        
-        #page-right {
-            box-shadow: inset 5px 0 15px -5px rgba(0, 0, 0, 0.2);
+        /* Variabel Warna Tema Peri */
+        :root {
+            --fairy-pink: #fce4ec; /* Pink muda */
+            --fairy-purple-light: #e8eaf6; /* Ungu muda */
+            --fairy-purple-dark: #4a148c; /* Ungu tua untuk teks */
+            --fairy-heading: #6a1b9a; /* Ungu untuk judul */
+            --fairy-gold: #ffd700; /* Emas untuk bingkai */
         }
 
-        /* Styling untuk tombol navigasi agar lebih 'ajaib' */
-        .nav-button {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        body {
+            font-family: 'Lato', sans-serif;
+            /* Latar belakang gradien yang lembut */
+            background: linear-gradient(135deg, var(--fairy-pink), var(--fairy-purple-light));
+            color: var(--fairy-purple-dark);
+            min-height: 100vh;
         }
-        .nav-button:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+
+        /* Styling Judul dengan Font Peri */
+        h1, h2, h3, .fairy-title {
+            font-family: 'Dancing Script', cursive;
+            color: var(--fairy-heading);
+            font-weight: 700;
         }
-        .nav-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        /* * =============================================
+         * KODE GAMBAR AJAIB (INI KUNCINYA!)
+         * =============================================
+         */
+        
+        /* 1. BINGKAI (FRAME) */
+        .fairy-frame {
+            width: 100%;
+            /* * Kita atur rasio aspek bingkai (misal: 3:4 untuk potret).
+             * Anda bisa ubah ini ke '1 / 1' (kotak) atau '16 / 9' (landscape).
+             */
+            aspect-ratio: 3 / 4;
+            border-radius: 15px;
+            overflow: hidden; /* Ini penting agar gambar tidak keluar bingkai */
+            
+            /* Hiasan bingkai emas */
+            border: 5px solid var(--fairy-gold);
+            padding: 5px;
+            background-color: #fff;
+            box-shadow: 0 6px 20px rgba(74, 20, 140, 0.25);
+            margin-bottom: 1.5rem;
+        }
+
+        /* 2. GAMBAR DI DALAM BINGKAI */
+        .fairy-frame img {
+            width: 100%;
+            height: 100%;
+            
+            /* * Ini adalah kode utamanya:
+             * 'object-fit: cover;' membuat gambar MENGISI seluruh
+             * bingkai sambil menjaga rasio aslinya,
+             * lalu memotong sisa gambar secara otomatis.
+             */
+            object-fit: cover; 
+            
+            border-radius: 10px; /* Sedikit lengkungan di dalam bingkai */
+            transition: transform 0.4s ease;
+        }
+
+        /* Efek bonus: zoom saat disentuh mouse */
+        .fairy-frame:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Opsi jika Anda ingin gambar pas (tidak terpotong) */
+        .fairy-frame-contain {
+            aspect-ratio: 3 / 4;
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed var(--fairy-heading);
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 15px;
+        }
+        
+        .fairy-frame-contain img {
+             width: 100%;
+             height: 100%;
+             /* 'contain' akan memuat seluruh gambar, tapi mungkin ada spasi kosong */
+             object-fit: contain;
         }
     </style>
 </head>
-<body class="bg-yellow-200 flex items-center justify-center min-h-screen p-4 md:p-8">
+<body class="pb-5">
 
-    <main class="w-full max-w-6xl">
-        <!-- Judul Buku -->
-        <h1 id="book-title" class="text-3xl md:text-5xl font-bold text-center text-pink-600 mb-6" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
-            <!-- Judul akan diisi oleh JS -->
-        </h1>
+    <!-- Header / Judul Utama -->
+    <header class="container text-center py-5">
+        <i class="fas fa-magic fa-3x" style="color: var(--fairy-gold);"></i>
+        <h1 class="display-3 fairy-title mt-3">Selamat Datang di Taman Peri</h1>
+        <p class="lead">Galeri foto dari dunia ajaib yang tersembunyi.</p>
+    </header>
 
-        <!-- Kontainer Buku -->
-        <div id="book-container" class="w-full h-[70vh] md:h-[600px] max-w-6xl mx-auto bg-white rounded-lg shadow-2xl flex overflow-hidden border-4 border-yellow-400">
-            
-            <!-- Halaman Kiri -->
-            <div id="page-left" class="w-1/2 h-full p-6 md:p-10 overflow-y-auto relative">
-                <div id="left-content">
-                    <!-- Konten kiri akan diisi oleh JS -->
+    <!-- Konten Galeri -->
+    <main class="container">
+
+        <h2 class="text-center fairy-title display-5 mb-4">Galeri Ajaib (Mode: Cover/Potong)</h2>
+        <p class="text-center mb-4">Gunakan kelas <strong>.fairy-frame</strong>. Gambar Anda akan otomatis mengisi bingkai emas di bawah.</p>
+        
+        <div class="row">
+
+            <!-- CONTOH GAMBAR 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="fairy-frame">
+                    <!-- 
+                        CARA MENGGANTI GAMBAR:
+                        1. Simpan gambar Anda (misal: "peri1.jpg") di folder yang sama dengan file HTML ini.
+                        2. Ganti "..." di src="" dengan nama file Anda (misal: "peri1.jpg").
+                        3. Gambar akan otomatis terpotong dan pas.
+                    -->
+                    <img src="https://placehold.co/600x800/EC4899/FFFFFF?text=Peri+Merah+Muda" alt="Deskripsi gambar peri Anda">
                 </div>
-                <span class="absolute bottom-4 left-6 text-lg font-bold text-gray-400" id="left-page-num"></span>
+                <h3 class="text-center fairy-title fs-4">Peri Bunga Mawar</h3>
             </div>
-            
-            <!-- Halaman Kanan -->
-            <div id="page-right" class="w-1/2 h-full p-6 md:p-10 overflow-y-auto relative">
-                <div id="right-content">
-                    <!-- Konten kanan akan diisi oleh JS -->
+
+            <!-- CONTOH GAMBAR 2 (Gambar Landscape akan terpotong pas) -->
+            <div class="col-md-6 col-lg-4">
+                <div class="fairy-frame">
+                    <!-- 
+                      Ganti src="..." dengan nama file gambar Anda.
+                      Bahkan jika gambar Anda landscape (melebar), 
+                      gambar akan tetap pas mengisi bingkai potret ini.
+                    -->
+                    <img src="https://placehold.co/800x600/3B82F6/FFFFFF?text=Peri+Air+(Landscape)" alt="Deskripsi gambar peri Anda">
                 </div>
-                <span class="absolute bottom-4 right-6 text-lg font-bold text-gray-400" id="right-page-num"></span>
+                <h3 class="text-center fairy-title fs-4">Peri Air Terjun</h3>
+            </div>
+
+            <!-- CONTOH GAMBAR 3 (Gambar Kotak akan terpotong pas) -->
+            <div class="col-md-6 col-lg-4">
+                <div class="fairy-frame">
+                    <!-- Ganti src="..." dengan nama file gambar Anda. -->
+                    <img src="https://placehold.co/600x600/22C55E/FFFFFF?text=Peri+Hutan+(Kotak)" alt="Deskripsi gambar peri Anda">
+                </div>
+                <h3 class="text-center fairy-title fs-4">Peri Daun Hijau</h3>
+            </div>
+
+        </div> <!-- end row -->
+        
+        <hr class="my-5">
+        
+        <!-- Bagian Penjelasan -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 text-center bg-white p-4 rounded-3 shadow-sm" style="opacity: 0.95;">
+                <h2 class="fairy-title">Bagaimana Cara Kerjanya?</h2>
+                <p>CSS di atas menggunakan <strong>`object-fit: cover;`</strong> pada setiap tag `<img>` di dalam `.fairy-frame`. Kode ini memberitahu browser untuk:</p>
+                <ol class="list-unstyled text-start w-75 mx-auto">
+                    <li class="mb-2"><i class="fas fa-fw fa-check-circle text-success me-2"></i> Mengisi seluruh bingkai (rasio 3:4).</li>
+                    <li class="mb-2"><i class="fas fa-fw fa-check-circle text-success me-2"></i> Menjaga rasio aspek asli gambar.</li>
+                    <li class="mb-2"><i class="fas fa-fw fa-check-circle text-success me-2"></i> Memotong (crop) bagian gambar yang berlebih secara otomatis.</li>
+                </ol>
+                <p class="mt-3">Hasilnya, semua gambar Anda akan terlihat rapi dan seragam di dalam bingkai emas tanpa perlu Anda edit manual!</p>
             </div>
         </div>
 
-        <!-- Tombol Navigasi -->
-        <div id="navigation" class="flex justify-between items-center w-full max-w-6xl mx-auto mt-6">
-            <button id="prev-btn" class="nav-button bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg text-lg font-bold">
-                <i class="fas fa-arrow-left mr-2"></i> Sebelumnya
-            </button>
-            <span id="page-indicator" class="text-lg font-semibold text-gray-700">
-                <!-- Indikator halaman akan diisi oleh JS -->
-            </span>
-            <button id="next-btn" class="nav-button bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-lg text-lg font-bold">
-                Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
-            </button>
-        </div>
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const bookTitle = "Putri Lilia & Kristal Harapan";
-            
-            // Definisikan konten untuk setiap halaman
-            // Kita akan menggunakan 'spread' (2 halaman sekaligus)
-            const spreads = [
-                // Spread 1: Halaman Sampul (Kiri) & Halaman 1 (Kanan)
-                {
-                    left: {
-                        type: 'cover',
-                        title: 'Putri Lilia & Kristal Harapan',
-                        author: 'oleh Kerajaan Fantasi',
-                        imagePlaceholder: 'Kastil Megah (Disarankan: 400x500px)' // Biru
-                    },
-                    right: {
-                        type: 'text',
-                        text: `
-                            <p class="mb-4">Di kerajaan Aethelgard, Putri Lilia tinggal bersama Kristal Harapan yang melindungi mereka.</p>
-                            <p class="mb-4">Suatu hari, kristal itu meredup. Bunga-bunga layu dan tawa rakyat menghilang.</p>
-                            <p>Putri Lilia berjanji akan mengembalikan cahaya kristal itu.</p>
-                        `
-                    }
-                },
-                // Spread 2: Halaman 2 & 3
-                {
-                    left: {
-                        type: 'text-image',
-                        text: `
-                            <h3 class="text-2xl font-bold text-green-700 mb-3">Petunjuk Sang Penyihir</h3>
-                            <p class="mb-4">Penyihir Elara dari Hutan Berbisik memberi petunjuk.</p>
-                            <p>"Kau harus menemukan tiga Permata Emosi," katanya. "Permata Keberanian (Biru), Kebaikan (Hijau), dan Kegembiraan (Pink)."</p>
-                        `,
-                        imagePlaceholder: 'Hutan Berbisik (Disarankan: 400x300px)' // Hijau
-                    },
-                    right: {
-                        type: 'text-image',
-                        text: `
-                            <h3 class="text-2xl font-bold text-blue-700 mb-3">Permata Keberanian</h3>
-                            <p class="mb-4">Lilia pergi ke Gua Naga Tertidur. Ia memainkan musik lembut agar sang naga tidur lebih lelap.</p>
-                            <p>Di dalam gua, ia menemukan Permata Biru yang bersinar terang!</p>
-                        `,
-                        imagePlaceholder: 'Gua Naga (Disarankan: 400x300px)' // Biru
-                    }
-                },
-                // Spread 3: Halaman 4 & 5
-                {
-                    left: {
-                        type: 'text-image',
-                        text: `
-                            <h3 class="text-2xl font-bold text-pink-600 mb-3">Permata Kegembiraan</h3>
-                            <p class="mb-4">Ia lalu tiba di desa yang muram. Lilia membantu penduduk, memperbaiki mainan, dan menanam bunga merah muda.</p>
-                            <p>Tawa anak-anak kembali terdengar, dan Permata Pink muncul di air mancur.</p>
-                        `,
-                        imagePlaceholder: 'Desa Ceria (Disarankan: 400x300px)' // Pink
-                    },
-                    right: {
-                        type: 'text-image',
-                        text: `
-                            <h3 class="text-2xl font-bold text-green-700 mb-3">Permata Kebaikan</h3>
-                            <p class="mb-4">Terakhir, di Sungai Perak, ia bertemu peri air. Sang peri terkesan dengan kebaikan hati Lilia yang pernah menolong burung.</p>
-                            <p>Sebagai hadiah, Lilia mendapatkan Permata Hijau.</p>
-                        `,
-                        imagePlaceholder: 'Peri Sungai (Disarankan: 400x300px)' // Hijau
-                    }
-                },
-                // Spread 4: Halaman 6 & Halaman Akhir
-                {
-                    left: {
-                        type: 'text',
-                        text: `
-                            <h3 class="text-2xl font-bold text-yellow-500 mb-3">Kembalinya Cahaya</h3>
-                            <p class="mb-4">Lilia kembali ke istana dan meletakkan ketiga permata di samping Kristal Harapan.</p>
-                            <p class="mb-4">Kristal itu kembali bersinar kuning cerah! Bunga mekar dan kerajaan kembali bahagia.</p>
-                            <p class="text-center mt-8 text-3xl font-bold italic text-gray-700">Tamat.</p>
-                        `
-                    },
-                    right: {
-                        type: 'cover',
-                        title: 'Tamat',
-                        author: 'Semoga kau menikmati ceritanya!',
-                        imagePlaceholder: 'Kerajaan Cerah (Disarankan: 400x500px)' // Kuning
-                    }
-                }
-            ];
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5">
+        <p class="mb-0">Dibuat dengan <i class="fas fa-heart text-danger"></i> dan <i class="fas fa-magic" style="color: var(--fairy-heading);"></i> di Taman Peri.</p>
+    </footer>
 
-            let currentSpreadIndex = 0;
-            const totalSpreads = spreads.length;
-
-            const titleEl = document.getElementById('book-title');
-            const leftContentEl = document.getElementById('left-content');
-            const rightContentEl = document.getElementById('right-content');
-            const leftPageNumEl = document.getElementById('left-page-num');
-            const rightPageNumEl = document.getElementById('right-page-num');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const pageIndicatorEl = document.getElementById('page-indicator');
-
-            function renderPage(contentEl, pageData) {
-                if (!pageData) {
-                    contentEl.innerHTML = '';
-                    return;
-                }
-
-                let html = '';
-                if (pageData.type === 'cover') {
-                    html = `
-                        <div class="flex flex-col items-center justify-center h-full text-center">
-                            <h2 class="text-3xl md:text-4xl font-bold text-pink-600 mb-4">${pageData.title}</h2>
-                            
-                            <!-- TEMPAT GAMBAR ANDA -->
-                            <div class="w-full max-w-sm h-[400px] bg-gray-200 rounded-lg shadow-md mb-4 border-4 border-dashed border-gray-400 flex items-center justify-center p-4 text-center text-gray-500">
-                               <img src="kastil megah.jpg!w700wp" alt="${pageData.imagePlaceholder}" class="rounded-lg shadow-md w-full max-w-sm mb-4 border-4 border-white">
-                            </div>
-                            <!-- 
-                            CARA MEMASUKKAN GAMBAR:
-                            1. Upload gambar Anda (misal: "kastil.png") ke folder yang sama dengan file index.html ini.
-                            2. Ganti seluruh blok <div> "TEMPAT GAMBAR ANDA" di atas dengan tag <img> seperti ini:
-                            <img src="kastil.png" alt="${pageData.imagePlaceholder}" class="rounded-lg shadow-md w-full max-w-sm mb-4 border-4 border-white">
-                            -->
-                            
-                            <p class="text-xl italic text-gray-600">${pageData.author}</p>
-                        </div>
-                    `;
-                } else if (pageData.type === 'text') {
-                    html = `<div class="text-gray-800 text-base md:text-lg leading-relaxed">${pageData.text}</div>`;
-                } else if (pageData.type === 'text-image') {
-                    html = `
-                        <div class="text-gray-800 text-base md:text-lg leading-relaxed">
-                            ${pageData.text}
-                            
-                            <!-- TEMPAT GAMBAR ANDA -->
-                            <div class="w-full h-[250px] bg-gray-200 rounded-lg shadow-md mt-6 border-4 border-dashed border-gray-400 flex items-center justify-center p-4 text-center text-gray-500">
-                                <img src="peri sungai.avif">
-                            </div>
-                            <!-- 
-                            CARA MEMASUKKAN GAMBAR:
-                            1. Upload gambar Anda (misal: "hutan.png") ke folder yang sama dengan file index.html ini.
-                            2. Ganti seluruh blok <div> "TEMPAT GAMBAR ANDA" di atas dengan tag <img> seperti ini:
-                            <img src="hutan.png" alt="${pageData.imagePlaceholder}" class="rounded-lg shadow-md w-full mt-6 border-4 border-white">
-                            -->
-                        </div>
-                    `;
-                }
-                contentEl.innerHTML = html;
-            }
-
-            function renderBook() {
-                const spreadData = spreads[currentSpreadIndex];
-                
-                // Render halaman
-                renderPage(leftContentEl, spreadData.left);
-                renderPage(rightContentEl, spreadData.right);
-
-                // Update nomor halaman
-                if (currentSpreadIndex === 0) {
-                    leftPageNumEl.textContent = 'Sampul';
-                    rightPageNumEl.textContent = '1';
-                } else {
-                    leftPageNumEl.textContent = `${currentSpreadIndex * 2}`;
-                    rightPageNumEl.textContent = `${currentSpreadIndex * 2 + 1}`;
-                }
-                
-                // Perbarui visibilitas tombol navigasi
-                prevBtn.disabled = (currentSpreadIndex === 0);
-                nextBtn.disabled = (currentSpreadIndex === totalSpreads - 1);
-                
-                // Perbarui indikator halaman
-                pageIndicatorEl.textContent = `Halaman ${currentSpreadIndex * 2 + 1}-${currentSpreadIndex * 2 + 2} dari ${totalSpreads * 2}`;
-            }
-
-            // Event Listeners untuk Tombol
-            nextBtn.addEventListener('click', () => {
-                if (currentSpreadIndex < totalSpreads - 1) {
-                    currentSpreadIndex++;
-                    renderBook();
-                }
-            });
-
-            prevBtn.addEventListener('click', () => {
-                if (currentSpreadIndex > 0) {
-                    currentSpreadIndex--;
-                    renderBook();
-                }
-            });
-
-            // Render awal
-            titleEl.textContent = bookTitle;
-            renderBook();
-        });
-    </script>
+    <!-- Memuat Bootstrap JS (Selalu di akhir body) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
-           
-            
-                         
-                
+</html>                
            
